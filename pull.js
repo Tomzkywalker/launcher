@@ -13,12 +13,20 @@ function fetchRepository(
   name,
   cwd
 ) {
+  console.log(
+    `[FETCH] ${name}...`
+  );
+
   try {
     runGit(
       cwd,
       [
         "fetch",
       ]
+    );
+
+    console.log(
+      `[OK] ${name} refreshed.`
     );
 
     return {

@@ -503,7 +503,7 @@ function getSyncStatus(gitInfo) {
 
 function printStatus() {
   console.log("");
-  console.log("Git Status");
+  console.log("=== GIT STATUS ===");
   console.log("");
 
   for (const service of [
@@ -533,7 +533,7 @@ function printStatus() {
   }
 
   console.log("");
-  console.log("Services");
+  console.log("=== SERVICES ===");
   console.log("");
 
   for (const service of Object.values(
@@ -1188,9 +1188,7 @@ function stopService(service) {
 async function startAll() {
   clearScreen();
 
-  console.log(
-    "=== START ALL ==="
-  );
+  console.log("=== START ALL ===");
 
   console.log("");
 
@@ -1275,9 +1273,7 @@ async function stopAll(
     clearScreen();
   }
 
-  console.log(
-    "=== STOP ALL ==="
-  );
+  console.log("=== STOP ALL ===");
 
   console.log("");
 
@@ -1524,9 +1520,7 @@ async function gracefulShutdown() {
 
       clearScreen();
 
-      console.log(
-        "=== EXIT ==="
-      );
+      console.log("=== EXIT ===");
 
       console.log("");
 
@@ -1763,17 +1757,25 @@ async function handleCommand(
       // ------------------------------
 
       case "R":
+        clearScreen();
+      
+        console.log("=== REFRESH GIT STATUS ===");
+      
+        console.log("");
+      
         fetchRepository(
           "Backend",
           BACKEND_PATH
         );
-
+      
+        console.log("");
+      
         fetchRepository(
           "Frontend",
           FRONTEND_PATH
         );
-
-        refreshUI();
+      
+        showMenu();
         break;
 
       case "F":
@@ -1850,30 +1852,24 @@ process.stdin.on(
   }
 );
 
-
-
 // ========================================
 // INITIAL UI
 // ========================================
 
 clearScreen();
 
-console.log(
-  "================================="
-);
+console.log("=================================");
+console.log("          DEV LAUNCHER           ");
+console.log("=================================");
 
-console.log(
-  "          DEV LAUNCHER"
-);
-
-console.log(
-  "================================="
-);
+console.log("");
 
 fetchRepository(
   "Backend",
   BACKEND_PATH
 );
+
+console.log("");
 
 fetchRepository(
   "Frontend",
