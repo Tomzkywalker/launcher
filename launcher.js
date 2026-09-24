@@ -504,12 +504,12 @@ function getSyncStatus(gitInfo) {
 function printStatus() {
   console.log("");
   console.log("=== GIT STATUS ===");
-  console.log("");
 
   for (const service of [
     services.backend,
     services.frontend,
   ]) {
+	  console.log("");
     const gitInfo =
       getGitInfo(
         service.gitPath
@@ -544,7 +544,6 @@ function printStatus() {
         `           └─ Remote : ${gitInfo.remoteCommit} ${gitInfo.remoteMessage} | ${formatRelativeTime(gitInfo.remoteTimestamp)}`
       );
     }
-	console.log("");
   }
 
   console.log("");
