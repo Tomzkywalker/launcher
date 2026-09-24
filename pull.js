@@ -287,6 +287,53 @@ function getGitInfo(cwd) {
       // Repository may not have an upstream.
     }
 
+    let remoteCommit = null;
+    let remoteMessage = null;
+    let remoteTimestamp = null;
+
+    if (
+      ahead > 0 ||
+      behind > 0
+    ) {
+      try {
+        remoteCommit =
+          runGit(
+            cwd,
+            [
+              "rev-parse",
+              "--short",
+              "@{u}",
+            ]
+          );
+
+        remoteMessage =
+          runGit(
+            cwd,
+            [
+              "log",
+              "-1",
+              "--format=%s",
+              "@{u}",
+            ]
+          );
+
+        remoteTimestamp =
+          Number(
+            runGit(
+              cwd,
+              [
+                "log",
+                "-1",
+                "--format=%ct",
+                "@{u}",
+              ]
+            )
+          ) * 1000;
+      } catch {
+        // Upstream information unavailable.
+      }
+    }
+
     return {
       branch,
       commit,
@@ -295,6 +342,9 @@ function getGitInfo(cwd) {
       workingTree,
       ahead,
       behind,
+      remoteCommit,
+      remoteMessage,
+      remoteTimestamp,
     };
   } catch {
     return null;

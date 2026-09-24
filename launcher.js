@@ -519,17 +519,32 @@ function printStatus() {
       console.log(
         `${service.name.padEnd(10)} Git information unavailable`
       );
+	  console.log("");
 
       continue;
     }
 
     console.log(
-      `${service.name.padEnd(10)} ${gitInfo.branch}@${gitInfo.commit} | ${gitInfo.workingTree} | ${getSyncStatus(gitInfo)}`
+      `${service.name.padEnd(10)} ${gitInfo.branch.padEnd(5)} | ${gitInfo.workingTree} | ${getSyncStatus(gitInfo)}`
     );
-
+    
+    const hasRemoteDifference =
+      gitInfo.ahead > 0 ||
+      gitInfo.behind > 0;
+    
     console.log(
-      `           └─ ${gitInfo.message} | ${formatRelativeTime(gitInfo.timestamp)}`
+      `           ${hasRemoteDifference ? "├" : "└"}─ Local  : ${gitInfo.commit} ${gitInfo.message} | ${formatRelativeTime(gitInfo.timestamp)}`
     );
+    
+    if (
+      hasRemoteDifference &&
+      gitInfo.remoteCommit
+    ) {
+      console.log(
+        `           └─ Remote : ${gitInfo.remoteCommit} ${gitInfo.remoteMessage} | ${formatRelativeTime(gitInfo.remoteTimestamp)}`
+      );
+    }
+	console.log("");
   }
 
   console.log("");
