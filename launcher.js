@@ -486,13 +486,13 @@ function getSyncStatus(gitInfo) {
 
   if (gitInfo.ahead > 0) {
     parts.push(
-      `AHEAD ${gitInfo.ahead}`
+      `AHEAD ${gitInfo.ahead} ${gitInfo.ahead === 1 ? "COMMIT" : "COMMITS"}`
     );
   }
-
+  
   if (gitInfo.behind > 0) {
     parts.push(
-      `BEHIND ${gitInfo.behind}`
+      `BEHIND ${gitInfo.behind} ${gitInfo.behind === 1 ? "COMMIT" : "COMMITS"}`
     );
   }
 
@@ -509,7 +509,7 @@ function printStatus() {
     services.backend,
     services.frontend,
   ]) {
-	  console.log("");
+      console.log("");
     const gitInfo =
       getGitInfo(
         service.gitPath
